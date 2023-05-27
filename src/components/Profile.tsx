@@ -1,4 +1,5 @@
 import React from 'react';
+import Avatar from './Avatar';
 
 type Props = {
     image: string;
@@ -11,10 +12,10 @@ type Props = {
 export default function Profile({ image, alt, name, title, isNew }: Props) {
     return (
         <div className='profile'>
-            <img className='photo' src={image} alt={alt} />
+            <Avatar image={image} alt={alt} />
             <h1>{name}</h1>
             <p>{title}</p>
-            {isNew && <span className='new'>{isNew}</span>}
+            {isNew && <span>New</span>}
         </div>
     );
 }
