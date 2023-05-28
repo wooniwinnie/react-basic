@@ -9,20 +9,27 @@ type Product = {
 };
 
 export default function Products({}: Props) {
-    const [count, setCount] = useState<number>(0);
     const [products, setProducts] = useState<Product[]>([]);
-
+    const [checked, setChecked] = useState<string>('false');
+    const handleChange = () => {
+        setChecked((prev) => (prev === 'true' ? 'false' : 'true'));
+    };
     useEffect(() => {
-        fetch('data/products.json')
+        fetch(`data/${checked === 'true' ? 'sale_' : ''}products.json`)
             .then((res) => res.json())
             .then((data) => {
                 console.log('데이터 전송 완료');
                 setProducts(data);
             });
-    }, []);
+        return () => {
+            console.log('청소 진행합니다');
+        };
+    }, [checked]);
 
     return (
         <>
+            <input type='checkbox' value={checked} onChange={handleChange} />
+            <label htmlFor='checkbox'>세일품목 보기</label>
             <ul>
                 {products.map((product) => (
                     <li key={product.id}>
